@@ -1,7 +1,7 @@
 # https://davidrroberts.wordpress.com/2016/04/06/cycling-gear-ratio-calculator-for-r-or-why-you-should-just-go-buy-a-sram-eagle-1x12-group-right-now/
 
 # Function to generate standard cassette spreads
-# Requires the file "data/cassettekey.csv" file
+# Requires the file "data/cassette_key.csv" file
 #' Title
 #'
 #' @param brand 
@@ -26,7 +26,7 @@ getCogs <- function(brand, speeds, small, large){
   # large (numeric) = size of the largest cog
   output <- c()
   if(brand=="Campy"|brand=="campy"){brand <- "Campagnolo"}
-  cogs <- cassetteKey %>% 
+  cogs <- cassette_key %>% 
     filter(Manufact == tolower(brand) & 
              NSpeeds == speeds & 
              SmallCog == small & 

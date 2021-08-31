@@ -12,16 +12,16 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
 
 * Functions are in `R/bicycle_gears.R`.
-* Data is in `data/cassetekey.csv`.
+* Data is in `data/cassette_key.csv`.
 
 ## Read in data and functions
 
 
 ```{r}
 library(dplyr)
-cassetteKey <- readr::read_csv('data/cassettekey.csv')
+cassette_key <- readr::read_csv('data/cassette_key.csv')
 
-cassetteKey ## todo make interactive table
+cassette_key ## todo make interactive table
 ```
 
 ```{r two-plus-two, exercise=TRUE}
