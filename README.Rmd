@@ -4,7 +4,14 @@ output: github_document
 always_allow_html: true
 ---
 
-**Credit:** the code in bicycle_gears.R was written by David Roberts and described in his April 6 2016 blog post from [Cycling gear ratio calculator for R (or why you should just go buy a SRAM Eagle 1×12 group right now)](https://davidrroberts.wordpress.com/2016/04/06/cycling-gear-ratio-calculator-for-r-or-why-you-should-just-go-buy-a-sram-eagle-1x12-group-right-now/). 
+**Credit:** The code and the considerable work in curating the `cassette_key.csv` dataset, in working out the logic underlying the functions in `bicycle_gears.R`, and the examples for each function was all done by David Roberts and described - along with commentary on why one front chainring (1x) is better than two (2x) in in his April 6 2016 blog post from [Cycling gear ratio calculator for R (or why you should just go buy a SRAM Eagle 1×12 group right now)](https://davidrroberts.wordpress.com/2016/04/06/cycling-gear-ratio-calculator-for-r-or-why-you-should-just-go-buy-a-sram-eagle-1x12-group-right-now/). 
+
+I was interested in exploring different combinations, so naturally the first thing I did was search Google for "R bicycle gear ratios" and came across his blog post. Then decided to post on GitHub to make it easier for others to use.
+
+Things you can do to contribute: 
+- Improve & extend figures
+- Develop a shiny app
+- Finish converting into an R package
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE)
@@ -28,16 +35,55 @@ cassette_key ## todo make interactive table
 source('R/bicycle_gears.R')
 ```
 
+## Functions
+
+### getCogs
+
+
+```{r}
+
+# SRAM Eagle
+getCogs(brand = "SRAM", speeds = 12, small = 10, large = 50)
+
+# Campy 13-speed road
+getCogs("Campy", 13, 9, 42)
+```
+
+### Calculate Wheel Size
+
+```{r wheelSize}
+# For a typical 26" mountain bike setup with 2.1 tires
+wheelSize(rimSize = 559, tireSize = 2.1, tireUnits = "inches")
+
+# For a typical 700c road setup with 23c tires
+wheelSize(622, 23, "mm")
+```
+
+### Generate tables of gear ratios, gear inches, speeds at different RPMs
+
+```{r tables}
+# Example for a typical road setup
+# Standard 53-39 front
+myRings <- c(39, 53)
+
+# 11-speed 12-28 on the rear
+myCogs <- getCogs("Shimano", 11, 12, 28)
+
+# Running 700x23c
+myWheel <- wheelSize(622, 23, "mm")
+
+getGears(myRings, myCogs, myWheel)
+```
 
 ## Make a plot comparing 1x and 2x options
 
-```{r}
+```{r 1x_vs_2x}
 twoby_rings <- c(39, 53)
 # 11-speed 12-28 on the rear
 oneby_rings <- 44
-twoby_cogs <- getCogs("Road","Shimano", speeds = 11, small = 12, large = 28)
+twoby_cogs <- getCogs("Shimano", speeds = 11, small = 12, large = 28)
 
-oneby_cogs <- getCogs("Mountain", "Sram", speeds = 12, small = 10, large = 50)
+oneby_cogs <- getCogs("Sram", speeds = 12, small = 10, large = 50)
 # Running 700x23c
 myWheel <- wheelSize(622, 23, "mm")
 
